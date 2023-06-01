@@ -1,21 +1,72 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import NavBar from "./NavBar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginForm from "./LoginForm";
 import Home from "./Home";
 import RegisterForm from "./RegisterForm";
 import Profile from "./Profile";
+import SignIn from "./SignIn";
+import Navigation from "./NavBar";
+import { useState } from "react";
+import { ethers } from "ethers";
+import { Spinner } from "react-bootstrap";
+import "./App.css";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+  const [account, setAccount] = useState(null);
+
+  // MetaMask Login/Connect
+  const web3Handler = async () => {
+    const accounts = await window.ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    setAccount(accounts[0]);
+
+    // Get provider from Metamask
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // Set signer
+    const signer = provider.getSigner();
+
+    window.ethereum.on("chainChanged", (chainId) => {
+      window.location.reload();
+    });
+
+    window.ethereum.on("accountsChanged", async function (accounts) {
+      setAccount(accounts[0]);
+      await web3Handler();
+    });
+
+    setLoading(false);
+  };
+
   return (
-    <Router>
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/register" element={<RegisterForm />} />
-        <Route path="/profile" element={<Profile />} />
-      </Routes>
-    </Router>
+    <BrowserRouter>
+      <div className="App">
+        <Navigation web3Handler={web3Handler} account={account} />
+        <div>
+          {loading ? (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                minHeight: "80vh",
+              }}
+            >
+              <Spinner animation="border" style={{ display: "flex" }} />
+              <p className="mx-3 my-0">Awaiting Metamask Connection...</p>
+            </div>
+          ) : (
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<LoginForm />} />
+              <Route path="/register" element={<RegisterForm />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/sign-in" element={<SignIn />} />
+            </Routes>
+          )}
+        </div>
+      </div>
+    </BrowserRouter>
   );
 }
 
