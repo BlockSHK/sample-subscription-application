@@ -3,6 +3,14 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 require("dotenv").config();
+const axios = require("axios");
+
+// assuming that you have set your secret in .env file
+// you should replace 'YOUR_SECRET' with your actual secret.
+const jwtSecret = process.env.JWT_SECRET || "YOUR_SECRET";
+
+// Static contract address
+const contractAddress = "0xF1819424bF5A3858D126CC0fa200ee6D3DD24Ef6";
 
 const app = express();
 app.use(express.json());
@@ -26,6 +34,37 @@ app.post("/login", async (req, res) => {
   }
   const token = jwt.sign({ username }, process.env.JWT_SECRET);
   res.send({ token });
+});
+
+app.post("/sign-in", async (req, res) => {
+  console.log(req.body);
+  const { nonce, address, tokenId, signedNonce } = req.body;
+
+  try {
+    const response = await axios.post(
+      "https://b1r5aq31x2.execute-api.us-east-1.amazonaws.com/Prod/activation/activate",
+      {
+        nonce,
+        address,
+        contract: contractAddress,
+        tokenId,
+        sign: signedNonce,
+      }
+    );
+
+    const data = response.data;
+    console.log(response.data);
+    if (data.payload.activate === "true") {
+      // create and sign a new jwt
+      const token = jwt.sign({ address }, jwtSecret);
+      res.send({ token });
+    } else {
+      res.status(400).send({ error: "Activation failed" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "Server error" });
+  }
 });
 
 app.listen(3000, () => console.log("Server started"));
