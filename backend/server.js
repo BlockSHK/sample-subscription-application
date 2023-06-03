@@ -9,8 +9,8 @@ const axios = require("axios");
 // you should replace 'YOUR_SECRET' with your actual secret.
 const jwtSecret = process.env.JWT_SECRET || "YOUR_SECRET";
 
-// Static contract address
-const contractAddress = "0xF1819424bF5A3858D126CC0fa200ee6D3DD24Ef6";
+// Contract address from .env file
+const contractAddress = process.env.CONTRACT_ADDRESS;
 
 const app = express();
 app.use(express.json());
