@@ -48,14 +48,8 @@ const Navigation = ({ web3Handler, account }) => {
             <NavLink component={RouterLink} to="/">
               Home
             </NavLink>
-            <NavLink component={RouterLink} to="/login">
-              Login
-            </NavLink>
-            <NavLink component={RouterLink} to="/register">
-              Register
-            </NavLink>
-            <NavLink component={RouterLink} to="/profile">
-              Profile
+            <NavLink component={RouterLink} to="/application">
+              Application
             </NavLink>
             <NavLink component={RouterLink} to="/sign-in">
               Sign In

@@ -68,7 +68,7 @@ const SignIn = () => {
 
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
-        navigate("/");
+        navigate("/application");
       } else {
         alert("Invalid Sign In");
       }

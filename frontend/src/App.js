@@ -1,8 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginForm from "./LoginForm";
 import Home from "./Home";
-import RegisterForm from "./RegisterForm";
-import Profile from "./Profile";
+import Application from "./Application";
 import SignIn from "./SignIn";
 import Navigation from "./NavBar";
 import { useState } from "react";
@@ -58,9 +56,7 @@ function App() {
           ) : (
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/login" element={<LoginForm />} />
-              <Route path="/register" element={<RegisterForm />} />
-              <Route path="/profile" element={<Profile />} />
+              <Route path="/application" element={<Application />} />
               <Route path="/sign-in" element={<SignIn />} />
             </Routes>
           )}
