@@ -6,6 +6,7 @@ import {
   Typography,
   Box,
   TextareaAutosize,
+  Paper,
 } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -77,10 +78,11 @@ const SignIn = () => {
   };
 
   return (
-    <Box
+    <Paper
       component="form"
       noValidate
       autoComplete="off"
+      elevation={3}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -88,15 +90,14 @@ const SignIn = () => {
         alignItems: "center",
         justifyContent: "center",
         minHeight: "100vh",
-        width: "50%",
+        width: { xs: "90%", sm: "60%", md: "40%" },
         margin: "0 auto",
         boxSizing: "border-box",
-        padding: "1em",
-        border: "1px solid #ddd",
-        borderRadius: "5px",
+        padding: "2em",
+        borderRadius: "10px",
       }}
     >
-      <Typography variant="h4" component="h1" gutterBottom>
+      <Typography variant="h3" component="h1" gutterBottom>
         Sign a Message
       </Typography>
       {nonce && (
@@ -115,35 +116,51 @@ const SignIn = () => {
       )}
       {nonce && (
         <>
-          <Typography variant="h5" margin="normal">
+          <Typography variant="h6" margin="normal">
             Nonce: {nonce}
           </Typography>
           <TextareaAutosize
             aria-label="Signed Nonce"
-            rowsMin={3}
+            minRows={3}
+            style={{ width: "100%", padding: "0.5em", marginBottom: "1em" }}
             value={signedNonce ? `Signed Nonce: ${signedNonce}` : ""}
           />
-          <Button variant="contained" color="primary" onClick={signNonce}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={signNonce}
+            size="large"
+          >
             Sign Nonce
           </Button>
           {signedNonce && tokenId && (
-            <Button variant="contained" color="primary" onClick={sendData}>
-              Send Data
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={sendData}
+              size="large"
+            >
+              Sign In
             </Button>
           )}
         </>
       )}
       {!nonce && (
-        <Button variant="contained" color="primary" onClick={getNonce}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={getNonce}
+          size="large"
+        >
           Get Nonce
         </Button>
       )}
       {error && (
-        <Typography variant="h5" color="error">
+        <Typography variant="h6" color="error">
           Error: {error}
         </Typography>
       )}
-    </Box>
+    </Paper>
   );
 };
 
