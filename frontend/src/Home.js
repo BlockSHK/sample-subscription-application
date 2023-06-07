@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardContent, Typography, Box, Container } from "@mui/material";
 import { styled } from "@mui/system";
-import backgroundImage from "./background.jpg";
+import backgroundImage from "./background_3.jpg";
 
 const BackgroundImage = styled("div")({
   backgroundImage: `url(${backgroundImage})`,
