@@ -7,6 +7,7 @@ import { useState } from "react";
 import { ethers } from "ethers";
 import { Spinner } from "react-bootstrap";
 import "./App.css";
+import "quill/dist/quill.snow.css";
 
 function App() {
   const [loading, setLoading] = useState(true);
