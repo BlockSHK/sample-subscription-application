@@ -55,15 +55,21 @@ app.post("/sign-in", async (req, res) => {
     const data = response.data;
     console.log(response.data);
     if (data.payload.activate === "true") {
-      // create and sign a new jwt
-      const token = jwt.sign({ address }, jwtSecret);
-      res.send({ token });
+      // Check if expireTime is greater than current Unix timestamp
+      const currentUnixTime = Math.floor(Date.now() / 1000);
+      if (parseInt(data.payload.credential.expireTime) > currentUnixTime) {
+        // create and sign a new jwt
+        const token = jwt.sign({ address }, jwtSecret);
+        res.send({ token });
+      } else {
+        res.status(400).send({ error: "Activation expired" });
+      }
     } else {
       res.status(400).send({ error: "Activation failed" });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).send({ error: "Server error" });
+    res.status(400).send({ error: "No Access" });
   }
 });
 
