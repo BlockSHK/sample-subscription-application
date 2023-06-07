@@ -14,16 +14,22 @@ const Application = () => {
       navigate("/sign-in");
     } else {
       new Quill(quillElement.current, {
-        theme: "snow",
+        debug: "info",
         modules: {
-          toolbar: true, // Set the toolbar option to false to hide it.
+          toolbar: true,
         },
+        placeholder: "Blockchain is ...",
+        readOnly: true,
+        theme: "snow",
       });
     }
   }, [navigate, token]);
 
   return (
-    <Card variant="outlined" style={{ margin: "20px", padding: "20px" }}>
+    <Card
+      variant="outlined"
+      style={{ margin: "20px", padding: "20px", height: "80vh" }}
+    >
       <CardContent>
         <Typography variant="h5" component="div">
           Welcome to the Application
