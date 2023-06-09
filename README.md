@@ -91,7 +91,6 @@ The frontend uses Material-UI for styling.
 
 The backend is a simple Express server:
 
-- It has endpoints for registering and logging in users.
 - Handles the process of activating the user through blockchain.
 
 ## Features
