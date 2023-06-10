@@ -16,7 +16,7 @@ const BackgroundImage = styled("div")({
 });
 
 const StyledCard = styled(Card)(({ theme }) => ({
-  minHeight: "70vh",
+  minHeight: "50vh",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
